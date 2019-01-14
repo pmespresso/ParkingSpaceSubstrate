@@ -31,6 +31,8 @@ extern crate srml_sudo as sudo;
 extern crate srml_aura as aura;
 extern crate substrate_consensus_aura_primitives as consensus_aura;
 
+mod parking_space;
+
 use rstd::prelude::*;
 #[cfg(feature = "std")]
 use primitives::bytes;
@@ -180,6 +182,8 @@ impl sudo::Trait for Runtime {
 	type Proposal = Call;
 }
 
+impl parking_space::Trait for Runtime {}
+
 construct_runtime!(
 	pub enum Runtime with Log(InternalLog: DigestItem<Hash, Ed25519AuthorityId>) where
 		Block = Block,
@@ -192,6 +196,7 @@ construct_runtime!(
 		Aura: aura::{Module},
 		Balances: balances,
 		Sudo: sudo,
+		ParkingSpace: parking_space::{Module, Call, Storage},
 	}
 );
 
