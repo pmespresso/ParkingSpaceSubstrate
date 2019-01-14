@@ -20,11 +20,11 @@ The Polkadot/Substrate GUI makes it easier to interact with the runtime:
 
 Because we use a custom Struct to represent a Parking Space, we need to let the UI know about it so it can decode it appropriately. That's done with the `runtime/parking_space_struct.json` file, uploaded under the `Settings` tab in the UI.
 
-![alt text]("./settings.png")
+![](settings.png)
 
 Here you rent a space by paying some of your token balance onto it.
 
-![alt text]("./extrinsic-rent-a-space.png")
+![](extrinsic-rent-a-space.png)
 
 Here you query the chain to confirm it actually happened.
-![alt text]("./extrinsic-chain-state-1.png")
+![](extrinsic-chain-state-1.png)
