@@ -1,0 +1,7 @@
+{
+    "Space": {
+        "index": "u32",
+        "renter": "AccountId",
+        "space_balance": "Balance"
+    }
+}
