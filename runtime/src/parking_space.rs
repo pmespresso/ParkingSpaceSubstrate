@@ -6,7 +6,7 @@ extern crate substrate_primitives;
 
 pub trait Trait: balances::Trait {}
 
-#[derive(Encode, Clone, Copy, Decode, Default)]
+#[derive(Encode, Eq, PartialEq, Clone, Copy, Decode, Default)]
 pub struct Space <AccountId, Balance> {
     index: u32,
     renter: AccountId,
@@ -18,11 +18,11 @@ decl_module! {
         fn rent_space(_origin, payment: T::Balance, space_index: u32) -> Result {
             let renter = ensure_signed(_origin)?;
 
+            // check if balance is zero (then it's empty)
+            ensure!(Self::spaceAt(space_index).space_balance < payment, "Sorry, someone's already paid more for this space.");
+
             // decrease the renter's balance by 1
             <balances::Module<T>>::decrease_free_balance(&renter, payment)?;
-
-            // // check if balance is zero (then it's empty)
-            // ensure!(Self::spaceAt(space_index) == 0, "Sorry, but the space is already taken.");
 
             // construct the space struct
             let my_space = Space {
@@ -37,11 +37,6 @@ decl_module! {
             // insert the mapping of renter accound id to the space index and its current balance
             <SpaceOf<T>>::insert(&renter, my_space.clone());
 
-            Ok(())
-        }
-
-        fn free_space(_origin) -> Result {
-            let freer = ensure_signed(_origin)?;
             Ok(())
         }
     }
